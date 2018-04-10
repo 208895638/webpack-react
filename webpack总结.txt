@@ -1,0 +1,32 @@
+1.loader是用来处理
+
+2.当你项目使用babel-loader的时候 得安装babel-core  babel-loader只是一个插件 babel-core是他的核心功能
+babel默认是支持es6的语法  如果是其他语法的话得在core里面配置
+
+.babelrc是babel-core的配置文件
+
+present是babel支持的语法
+里面写要编译成什么样子  loose：true是以松散模式
+下面是react是加一个react支持
+
+写好之后还得安装  你写什么就得安装什么
+安装这三个babel-preset-es2015 babel-preset-es2015-loose babel-preset-react
+
+3.html-webpack-plugin是生成一个页面 同时在webpack编译的时候把entry里面的东西放到这个生成的页面  
+意思是这个插件会在webpack编译的时候生成一个html文件  并把这个文件放在output的目录下 同时他会把output输出的js文件放到这个html文件里面
+
+4.react-dom是react为web端开发的渲染工具
+
+5.npm run 是执行package.json里面script里面的东西
+
+6.import { component } from "../component"  之所以这样写是因为../component里面暴露出去的模块的写法为 module.exports
+
+7.react-dom是react给客户端渲染的工具  他里面的react-dom/server是给服务端渲染的工具
+所以react有服务端渲染那么一说 服务端渲染就是服务端生成html返回给浏览器  客户端渲染就是客户端请求ajax
+
+8.在webpack.config.server.js中  有一个target  这个的意思是打包后的文件在哪个环境中
+libraryTarget是一个打包出来的js所使用的一种方案  比如cnpm i jq  和cdn上的jq使用的不是同一种方案   
+libraryTarget:commonjs2的意思是  在打包完成之后 我们可以用require引用  commonjs2是符合nodejs的 commonjs2是最新版的commonjs
+就比如这个项目  server-entry里面的就是module.exports 也就是得require引用才能用  而app12是直接放在script标签里就能使用
+
+9.rimraf 是一个包 他的作用是删除文件夹的  在package.json里安装这个包  想要删除某个文件夹是 执行  rimraf haha 这个haha就是文件夹 路径是相对package.json
