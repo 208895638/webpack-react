@@ -16,7 +16,8 @@ app.use("/public",express.static(path.join(__dirname,"../dist/")))
 
 app.get("*",function(req ,res){
   const appString =   ReactSSR.renderToString(serverEntry)
-  res.send(template.replace("<app></app>" , appString));
+   res.send(template.replace("<!--app-->" , appString));  //这一段的意思是返回给前端一个页面
+  // res.send(appString)  //这一段内容主要是react生成的片段 返回给前端
 })
 
 app.listen(3333,function(){

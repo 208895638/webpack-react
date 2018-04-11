@@ -23,6 +23,7 @@ present是babel支持的语法
 
 7.react-dom是react给客户端渲染的工具  他里面的react-dom/server是给服务端渲染的工具
 所以react有服务端渲染那么一说 服务端渲染就是服务端生成html返回给浏览器  客户端渲染就是客户端请求ajax
+react服务端渲染是在服务端生成页面再返回给浏览器  而客户端渲染好是浏览器加载js文件  生成页面内容
 
 8.在webpack.config.server.js中  有一个target  这个的意思是打包后的文件在哪个环境中
 libraryTarget是一个打包出来的js所使用的一种方案  比如cnpm i jq  和cdn上的jq使用的不是同一种方案   
@@ -30,3 +31,23 @@ libraryTarget:commonjs2的意思是  在打包完成之后 我们可以用requir
 就比如这个项目  server-entry里面的就是module.exports 也就是得require引用才能用  而app12是直接放在script标签里就能使用
 
 9.rimraf 是一个包 他的作用是删除文件夹的  在package.json里安装这个包  想要删除某个文件夹是 执行  rimraf haha 这个haha就是文件夹 路径是相对package.json
+
+10.cross-env是用来处理在windows和mac下设置开发环境不同而产生的包文件
+例如  NODE_ENV=development在mac下可以 在window下不行 用的时候得先安装一下
+
+11.webpack-dev-server是webpack给我们提供的一个插件  这个是当我们修改我们的代码时可以在浏览器看见我们修改之后的变化
+他能让那个我们通过webpack的配置生成一个服务器 编译的文件放在内存当中
+
+hot module replacement是在我们编辑代码完成之后可以让我们在浏览器立即访问到我们所改变的
+
+12.
+config.devServer={
+    host:"0.0.0.0"  //这个是告诉我们可以以任意方式访问  如localhost、ip等
+    port:"",
+    contentBase:path.join(__dirname , "../dist")   //这个类似于express的托管静态文件的目录 就是webpack编译静态文件输出的地址
+    hot:true    //这个是启动
+    overlay:{   //这个的作用是当webpack在编译的过程中产生了错误  立即在浏览器显示哪里出现了错误
+        errors:true  //这个的作用是在浏览器展示哪里出现了错误  会把warnning也展示出来  这个true就是用来配置只让浏览器显示错误而不显示其他的东西
+    }
+}
+当我们用浏览器渲染时  千万不能再项目有这个config文件输出的目录的   因为webpack-dev-server会检测在当前项目检测是否有这个输出目录  如果有的话会默认采用这个目录 所以解决方法是在config文件修改output的目录或者删除这个目录

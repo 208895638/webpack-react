@@ -1,6 +1,8 @@
 const path = require("path")  //主要是来完成绝对路径的缩写
 const htmlPlugin = require("html-webpack-plugin")   //
-module.exports = {
+
+const isDev = process.env.NODE_ENV === "development"   //这个是启动命令的时候告诉webpack开发环境是开发还是生产
+const config = {
     entry:{ //应用的入口   打包的时候的入口文件
         app12:path.join(__dirname,"../client/app.js")   //这个app12是生成的文件名称
     },
@@ -30,3 +32,20 @@ module.exports = {
         })  //自动生成一个页面  并且在webpack编译的时候把entry  output的文件插入到生成的页面里
     ]
 }
+if(isDev){
+    config.devServer = {   
+        host:"0.0.0.0",
+        port:"8888",
+        contentBase:path.join(__dirname , "../dist"),
+        // hot:true,
+        overlay:{
+            errors:true
+        },
+        publicPath:"/public",
+        historyApiFallback:{
+            index:"/public/index.html"
+        }
+    }
+}
+
+module.exports = config
