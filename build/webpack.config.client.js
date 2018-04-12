@@ -1,6 +1,6 @@
 const path = require("path")  //主要是来完成绝对路径的缩写
 const htmlPlugin = require("html-webpack-plugin")   //
-
+const webpack = require("webpack")
 const isDev = process.env.NODE_ENV === "development"   //这个是启动命令的时候告诉webpack开发环境是开发还是生产
 const config = {
     entry:{ //应用的入口   打包的时候的入口文件
@@ -9,7 +9,7 @@ const config = {
     output:{   //打包之后输出的地方
         filename:"[name].[hash].js",   //这俩参数就是   name代表的是entry下的app has0h是生成随机字符串
         path:path.join(__dirname , "../dist"),   //path就是输出的文件存放的地方
-        publicPath:"/public"  //这个是给index。html里面script标签里面引用的路径另外加上/public
+        publicPath:"/public/"  //这个是给index。html里面script标签里面引用的路径另外加上/public
     },
     module:{ //
         rules:[ 
@@ -33,11 +33,17 @@ const config = {
     ]
 }
 if(isDev){
+    config.entry = {
+        app:[
+            "react-hot-loader/patch",
+            path.join(__dirname,"../client/app.js")
+        ]
+    }
     config.devServer = {   
         host:"0.0.0.0",
         port:"8888",
         contentBase:path.join(__dirname , "../dist"),
-        // hot:true,
+        hot:true,
         overlay:{
             errors:true
         },
@@ -46,6 +52,7 @@ if(isDev){
             index:"/public/index.html"
         }
     }
+    config.plugins.push(new webpack.HotModuleReplacementPlugin())
 }
 
 module.exports = config
